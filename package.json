@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@ilovepdf/ilovepdf-nodejs": "^0.2.1",
+    "dotenv": "^16.0.3"
+  }
+}
