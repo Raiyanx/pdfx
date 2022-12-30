@@ -7,6 +7,7 @@ import (
 	"io"
 )
 
+
 func setEnv() {
 	fd, e := os.Open("env.csv")
 	if e != nil {

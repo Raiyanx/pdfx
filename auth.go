@@ -29,9 +29,9 @@ func auth() {
 	var rec map[string]string
 	json.Unmarshal(body, &rec)	
 
-	os.Setenv("token", rec["token"])
 
-	if _,b := os.LookupEnv("token"); b {
+	if elem, ok := rec["token"]; ok {
+		os.Setenv("token", elem)
 		fmt.Println("token present")
-	}	
+	}
 }
