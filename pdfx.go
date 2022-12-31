@@ -21,7 +21,8 @@ func main() {
 	}
 
 	pdfs := make([]string, 0)
-	
+	ranges := make([]string, 0)
+
 	if len(args) == 0 {
 		printUsage()
 		return
@@ -33,23 +34,41 @@ func main() {
 				pdfs = append(pdfs, args[i])
 			}
 			os.Setenv("tool", "merge")
-			startProcess(pdfs)
+			startProcess(pdfs, "merge", []string{})
 		}
 	} else if args[0] == "split" {
-		fmt.Println("using split")
+		if len(args) < 2 {
+			fmt.Println("Please select a file for splitting")
+		} else if len(args) < 3 {
+			fmt.Println("Please specify at least one range")
+		} else {
+			pdfs = append(pdfs, args[1])
+			for i:=2; i<len(args); i++ {
+				ranges = append(ranges, args[i])
+			}
+			os.Setenv("tool", "split")
+			startProcess(pdfs, "split", ranges)
+		}
 	} else {
-		printUsage()
+		printUsage()	
 		return
 	}
 }
 
 
-func startProcess(pdfs []string) {
+func startProcess(pdfs []string, tool string, ranges []string) {
 	auth()
 	start()	
 	server_filenames, totalSize := upload(pdfs)
-	process(server_filenames)
-	download(totalSize)
+	switch(tool){
+	case "merge":
+		merge(server_filenames)
+	case "split":
+		split(server_filenames, ranges)
+	default:
+		printUsage()	
+	}
+	download(totalSize, len(ranges))
 }
 
 

@@ -8,7 +8,7 @@ import (
 	"io"
 )
 
-func download(totalSize int64) {	
+func download(totalSize int64, numFiles int) {	
 	var bearer string
 	if t, ok := os.LookupEnv("token"); ok {
 		bearer = "Bearer " + t
@@ -34,7 +34,18 @@ func download(totalSize int64) {
 		log.Fatal(err)
 	}
 
-	file, err := createFile(os.Getenv("default_name"))
+	var file *os.File
+	switch(os.Getenv("tool")){
+	case "merge":
+		file, err = createPdf(os.Getenv("default_name"))
+	case "split":
+		if numFiles > 1 {
+			file, err = createZip(os.Getenv("default_name"))
+		} else {
+			file, err = createPdf(os.Getenv("default_name"))
+		}		
+	}
+
 	if err != nil {
 		log.Fatal(err)
 	}

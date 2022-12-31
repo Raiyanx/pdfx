@@ -6,8 +6,8 @@ import (
 
 func printUsage() {
 	usage := `Usage:
-	pdfx merge [files]
-	pdfx split filename [Integer/Integer-Integer]	
+	pdfx [-flags] merge [files]
+	pdfx [-flags] split filename [Integer/Integer-Integer]	
 `
 	fmt.Println(usage)
 }
