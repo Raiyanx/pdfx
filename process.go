@@ -68,8 +68,11 @@ func process(server_filenames map[string]string) {
 	var rec map[string]string
 	json.Unmarshal(body, &rec)	
 
+	fmt.Println(rec)
+
 	if elem, ok := rec["download_filename"]; ok {
 		fmt.Println("download_filename present")
 		fmt.Println(elem)
 	}
+
 }

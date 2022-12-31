@@ -12,8 +12,9 @@ func main() {
 	setEnv()
 	auth()
 	start()	
-	server_filenames := upload(pdfs)
+	server_filenames, totalSize := upload(pdfs)
 	process(server_filenames)
+	download(totalSize)
 }
 
 
