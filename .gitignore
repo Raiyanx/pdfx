@@ -1,6 +1,3 @@
-build/
-node_modules/
-.env
 *.csv
 *.pdf
 pdfx
