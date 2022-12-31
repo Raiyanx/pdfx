@@ -1,4 +1,4 @@
-# pdfx [Under Development]
+# pdfx
 A simple command line tool used for Splitting and Merging Pdfs.
 
 You can download the precompiled binary from [here](https://github.com/Raiyanx/pdfx/releases).
