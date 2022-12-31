@@ -8,8 +8,7 @@ import (
 	"io"
 )
 
-func download(totalSize int64) {
-	
+func download(totalSize int64) {	
 	var bearer string
 	if t, ok := os.LookupEnv("token"); ok {
 		bearer = "Bearer " + t
@@ -19,7 +18,6 @@ func download(totalSize int64) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 
 	req.Header.Add("Authorization", bearer)
 
@@ -31,13 +29,12 @@ func download(totalSize int64) {
 		log.Fatal(err)
 	}
 	
-
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	file, err := os.Create("merged.pdf")
+	file, err := createFile(os.Getenv("default_name"))
 	if err != nil {
 		log.Fatal(err)
 	}

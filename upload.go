@@ -12,16 +12,12 @@ import (
 )
 
 func upload(pdfs []string) (map[string]string, int64) {
-
 	server_filenames := make(map[string]string)
 	var totalSize int64 = 0
 
 	for _, pdf := range pdfs {
-
-
 		buf := new(bytes.Buffer)
 		w := multipart.NewWriter(buf)
-
 
 		if fd, e := os.Open(pdf); e != nil {
 			log.Fatal(e)		
@@ -42,7 +38,6 @@ func upload(pdfs []string) (map[string]string, int64) {
 			part.Write(fdata)
 		}
 		
-
 		part, err := w.CreateFormField("task") 
 		if err != nil {
 			log.Fatal(err)
@@ -50,7 +45,6 @@ func upload(pdfs []string) (map[string]string, int64) {
 		part.Write([]byte(os.Getenv("task")))
 
 		w.Close()
-
 
 		var bearer string
 		if t, ok := os.LookupEnv("token"); ok {
@@ -61,9 +55,9 @@ func upload(pdfs []string) (map[string]string, int64) {
 		if err != nil {
 			log.Fatal(err)
 		}
+
 		req.Header.Set("Content-Type", w.FormDataContentType())	
 		req.Header.Add("Authorization", bearer)
-
 		
 		client := &http.Client{}
 	
@@ -82,7 +76,6 @@ func upload(pdfs []string) (map[string]string, int64) {
 		json.Unmarshal(body, &rec)	
 
 		if elem, ok := rec["server_filename"]; ok {
-			fmt.Println("server_filename present")
 			server_filenames[pdf] = elem
 		}
 	}

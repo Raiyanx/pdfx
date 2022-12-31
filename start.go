@@ -10,7 +10,6 @@ import (
 )
 
 func start() {
-	
 	var bearer string
 	if t, ok := os.LookupEnv("token"); ok {
 		bearer = "Bearer " + t
@@ -20,7 +19,6 @@ func start() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 
 	req.Header.Add("Authorization", bearer)
 
@@ -32,7 +30,6 @@ func start() {
 		log.Fatal(err)
 	}
 	
-
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal(err)
@@ -41,15 +38,11 @@ func start() {
 	var rec map[string]string
 	json.Unmarshal(body, &rec)	
 
-
 	if elem, ok := rec["server"]; ok {
 		os.Setenv("server", elem)
-		fmt.Println("server present")
 	}
 
 	if elem, ok := rec["task"]; ok {
 		os.Setenv("task", elem)
-		fmt.Println("task present")
 	}
-
 }

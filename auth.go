@@ -11,6 +11,7 @@ import (
 )
 
 func auth() {
+
 	postBody, _ := json.Marshal(map[string]string{
 		"public_key":os.Getenv("public_key"),
 	})
@@ -21,6 +22,7 @@ func auth() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal(err)
@@ -29,9 +31,7 @@ func auth() {
 	var rec map[string]string
 	json.Unmarshal(body, &rec)	
 
-
 	if elem, ok := rec["token"]; ok {
 		os.Setenv("token", elem)
-		fmt.Println("token present")
 	}
 }

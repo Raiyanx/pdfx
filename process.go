@@ -22,7 +22,6 @@ func process(server_filenames map[string]string) {
 	entries := make([]entry, 0)
 
 	for key, val := range server_filenames {
-		fmt.Println(key, val)
 		newEntry := entry{
 			"server_filename":val,
 			"filename":key,
@@ -32,9 +31,7 @@ func process(server_filenames map[string]string) {
 
 	theMap["files"] = entries
 
-
 	postBody, _ := json.Marshal(theMap)
-
 	responseBody := bytes.NewBuffer(postBody)
 
 	req, err := http.NewRequest("POST", fmt.Sprintf("https://%v/v1/process", os.Getenv("server")), responseBody)
@@ -50,7 +47,6 @@ func process(server_filenames map[string]string) {
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Authorization", bearer)
 
-	
 	client := &http.Client{}
 
 	resp, err := client.Do(req)
@@ -59,7 +55,6 @@ func process(server_filenames map[string]string) {
 	}
 	defer resp.Body.Close()
 
-
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal(err)
@@ -67,12 +62,4 @@ func process(server_filenames map[string]string) {
 
 	var rec map[string]string
 	json.Unmarshal(body, &rec)	
-
-	fmt.Println(rec)
-
-	if elem, ok := rec["download_filename"]; ok {
-		fmt.Println("download_filename present")
-		fmt.Println(elem)
-	}
-
 }
